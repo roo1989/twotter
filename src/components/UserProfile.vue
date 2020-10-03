@@ -8,9 +8,25 @@
       <div class="user-profile__follower-count">
         <strong>Followers: </strong> {{ followers }}
       </div>
+      <form class="user-profile__create-twoot" @submit.prevent="createNewTwoot">
+        <label for="newTwoot"><strong>New Twoot</strong></label>
+        <textarea  v-model="newTwootContent" id="newTwoot" rows="4"></textarea>
+
+        <div class="user-profile__create_twoot_type">
+          <label for="newTwootType"><strong>Type: </strong></label>
+          <select id="newTwootType" v-model="selectedTwootType">
+            <option :value="option.value" v-for="(option, index) in twootTypes" :key="index">
+              {{ option.name }}
+            </option>
+          </select>
+        </div>
+        <button class="user-profile__create-twoot__submit">
+          Twoot!
+        </button>
+      </form>
     </div>
     <div class="user-profile__twoots-wrapper">
-        <TwootItem v-for="twoot in user.twoots" :key="twoot.id" :username="user.username" :twoot="twoot" />
+        <TwootItem v-for="twoot in user.twoots" :key="twoot.id" :username="user.username" :twoot="twoot" @favourite="favourite" />
     </div>
   </div>
 </template>
@@ -22,6 +38,12 @@ export default {
   components: {TwootItem},
   data() {
     return {
+      newTwootContent: '',
+      selectedTwootType: 'instant',
+      twootTypes: [
+        { value: 'draft', name: 'Draft' },
+        { value: 'instant', name: 'Instant Twoot' }
+      ],
       followers: 0,
       user: {
         id: 1,
@@ -29,7 +51,7 @@ export default {
         firstName: "Ragnar",
         lastName: "Olafsson",
         email: "ragnar@example.com",
-        isAdmin: false,
+        isAdmin: true,
         twoots: [
             { id: 1, content: 'Twotter is Amazing!!!' },
             { id: 2, content: 'Don\'t forget to subscribe to me!' },
@@ -47,33 +69,68 @@ export default {
     followUser() {
       this.followers += 1;
     },
+    favourite(id) {
+        console.log(`Twoot with id ${id} favoured!`);
+    },
+    createNewTwoot() {
+      if (this.newTwootContent && this.selectedTwootType !== 'draft') {
+        this.user.twoots.unshift({
+          id: this.user.twoots.length + 1,
+          content: this.newTwootContent
+        });
+        this.newTwootContent = '';
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+
 .user-profile {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  width: 100%;
+  grid-gap: 50px;
   padding: 50px 5%;
 }
+
 .user-profile__user-panel {
   display: flex;
   flex-direction: column;
-  margin-right: 50px;
   padding: 20px;
   background-color: white;
   border-radius: 5px;
-  border: 1px solid #dfe3e8;
+  border: 1px solid #DFE3E8;
 }
 
 .user-profile__admin-badge {
-    background-color: rebeccapurple;
-    color: white;
-    margin-right: auto;
-    padding: 0 10px;
-    border-radius: 5px;
-    font-weight: bold;
+  background-color: rebeccapurple;
+  color: white;
+  padding: 0 10px;
+  border-radius: 5px;
+  margin-right: auto;
+  font-weight: bold;
 }
+
+.user-profile__twoots-wrapper {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.user-profile__create-twoot {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-profile__create-twoot__submit {
+  display: flex;
+  justify-content: center;
+  margin-right: auto;
+  margin-top: 10px;
+  padding: 5px;
+  color: black;
+  font-weight: bold;
+}
+
 </style>

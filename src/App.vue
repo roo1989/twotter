@@ -17,9 +17,8 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   color: #2c3e50;
+  min-height: 100vh;
+  background-color: #F3F5FA;
 }
 </style>
