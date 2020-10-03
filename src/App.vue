@@ -2,6 +2,9 @@
   <div id="app">
     @{{ user.username }} - {{ fullName }}
     <strong>Followers:</strong> {{ followers }}
+    <button @click="followUser">
+      Follow User
+    </button>
   </div>
 </template>
 
@@ -24,6 +27,11 @@ export default {
   computed: {
     fullName() {
       return `${this.user.firstName} ${this.user.lastName}`;
+    }
+  },
+  methods: {
+    followUser() {
+      this.followers += 1;
     }
   }
 };
