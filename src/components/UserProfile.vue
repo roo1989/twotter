@@ -9,12 +9,17 @@
         <strong>Followers: </strong> {{ followers }}
       </div>
     </div>
+    <div class="user-profile__twoots-wrapper">
+        <TwootItem v-for="twoot in user.twoots" :key="twoot.id" :username="user.username" :twoot="twoot" />
+    </div>
   </div>
 </template>
 
 <script>
+import TwootItem from '@/components/TwootItem.vue';
 export default {
   name: "UserProfile",
+  components: {TwootItem},
   data() {
     return {
       followers: 0,
@@ -25,6 +30,11 @@ export default {
         lastName: "Olafsson",
         email: "ragnar@example.com",
         isAdmin: false,
+        twoots: [
+            { id: 1, content: 'Twotter is Amazing!!!' },
+            { id: 2, content: 'Don\'t forget to subscribe to me!' },
+            { id: 3, content: 'What will happen after the coronavirus passes?' },
+        ]
       },
     };
   },
