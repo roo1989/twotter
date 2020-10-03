@@ -44,8 +44,13 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
   color: #2c3e50;
   margin-top: 20px;
+}
+
+#app button {
+  margin: 2px;
+  padding: 5px;
 }
 </style>
