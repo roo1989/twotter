@@ -1,39 +1,14 @@
 <template>
   <div id="app">
-    @{{ user.username }} - {{ fullName }}
-    <strong>Followers:</strong> {{ followers }}
-    <button @click="followUser">
-      Follow User
-    </button>
+    <UserProfile />
   </div>
 </template>
 
 <script>
+import UserProfile from '@/components/UserProfile.vue';
 export default {
-  name: "App",
-  data() {
-    return {
-      followers: 0,
-      user: {
-        id: 1,
-        username: 'RagnarOrnOlafss',
-        firstName: 'Ragnar',
-        lastName: 'Olafsson',
-        email: 'ragnar@example.com',
-        'isAdmin': false,
-      }
-    }
-  },
-  computed: {
-    fullName() {
-      return `${this.user.firstName} ${this.user.lastName}`;
-    }
-  },
-  methods: {
-    followUser() {
-      this.followers += 1;
-    }
-  }
+  name: 'App',
+  components: {UserProfile}
 };
 </script>
 
@@ -46,11 +21,5 @@ export default {
   flex-direction: column;
   align-items: center;
   color: #2c3e50;
-  margin-top: 20px;
-}
-
-#app button {
-  margin: 2px;
-  padding: 5px;
 }
 </style>
