@@ -1,17 +1,16 @@
 <template>
   <form class="create-twoot-panel" @submit.prevent="createNewTwoot">
-    <label for="newTwoot"><strong>New Twoot </strong>({{ newTwootCharacterCount}}/180)</label>
-    <textarea  v-model="newTwootContent" id="newTwoot" rows="4"></textarea>
+    <label for="newTwoot"><strong>New Twoot </strong>({{ state.newTwootCharacterCount}}/180)</label>
+    <textarea  v-model="state.newTwootContent" id="newTwoot" rows="4"></textarea>
     <div class="create-twoot-panel__submit">
       <div class="create-twoot-type">
         <label for="newTwootType"><strong>Type: </strong></label>
-        <select id="newTwootType" v-model="selectedTwootType">
-          <option :value="option.value" v-for="(option, index) in twootTypes" :key="index">
+        <select id="newTwootType" v-model="state.selectedTwootType">
+          <option :value="option.value" v-for="(option, index) in state.twootTypes" :key="index">
             {{ option.name }}
           </option>
         </select>
       </div>
-
       <button>
         Twoot It!
       </button>
@@ -20,31 +19,34 @@
 </template>
 
 <script>
+import { reactive, computed } from 'vue';
 export default {
   name: "CreateTwootPanel",
-  data() {
-    return {
+  setup(props, context) {
+    const state = reactive({
       newTwootContent: '',
       selectedTwootType: 'instant',
       twootTypes: [
         { value: 'draft', name: 'Draft' },
         { value: 'instant', name: 'Instant Twoot' }
       ],
-    };
-  },
-  methods: {
-    createNewTwoot() {
-      if (this.newTwootContent && this.twootTypes !== 'draft') {
-        this.$emit('add-twoot', this.newTwootContent);
-        this.newTwootContent = '';
+    });
+
+    const newTwootCharacterCount = computed(() => state.newTwootContent.length);
+
+    function createNewTwoot() {
+      if (state.newTwootContent && state.twootTypes !== 'draft') {
+        context.emit('add-twoot', state.newTwootContent);
+        state.newTwootContent = '';
       }
-    },
-  },
-  computed: {
-    newTwootCharacterCount() {
-      return this.newTwootContent.length;
     }
-  }
+
+    return {
+      state,
+      newTwootCharacterCount,
+      createNewTwoot,
+    }
+  },
 }
 </script>
 
@@ -79,5 +81,4 @@ export default {
     }
   }
 }
-
 </style>
