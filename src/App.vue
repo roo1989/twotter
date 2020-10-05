@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import UserProfile from '@/components/UserProfile.vue';
+import UserProfile from '@/views/UserProfile.vue';
 export default {
   name: 'App',
   components: { UserProfile },
