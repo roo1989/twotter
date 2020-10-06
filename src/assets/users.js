@@ -1,11 +1,11 @@
 export const users = [
       {
         "id": 0,
-        "username": "enim",
-        "firstName": "Bailey",
-        "lastName": "Hampton",
-        "email": "example@example.com",
-        "isAdmin": false,
+        "username": "_roo1989",
+        "firstName": "Ragnar",
+        "lastName": "Olafsson",
+        "email": "ragnar@example.com",
+        "isAdmin": true,
         "twoots": [
           {
             "id": 0,
